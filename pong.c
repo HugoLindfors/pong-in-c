@@ -1,7 +1,5 @@
 #include "raylib.h"
 
-// cc pong.c `pkg-config --libs --cflags raylib` -o pong
-
 //------------------------------------------------------------------------------------
 // Program main entry point
 //------------------------------------------------------------------------------------
@@ -9,13 +7,15 @@ int main(void)
 {
     // Initialization
     //--------------------------------------------------------------------------------------
-    const int SCREEN_WIDTH = 800;
-    const int SCREEN_HEIGHT = 450;
+    // const int SCREEN_WIDTH = 800;
+    // const int SCREEN_HEIGHT = 450;
+    int display = GetCurrentMonitor();
+    SetWindowSize(GetMonitorWidth(display), GetMonitorHeight(display));
 
     int player_1_score = 0;
     int player_2_score = 0;
 
-    InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "raylib [core] example - keyboard input");
+    // InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "raylib [core] example - keyboard input");
 
     // ball
     Vector2 ball_position = {(float)GetScreenWidth() / 2, (float)GetScreenHeight() / 2};
