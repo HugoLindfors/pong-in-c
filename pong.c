@@ -9,25 +9,24 @@ int main(void)
 {
     // Initialization
     //--------------------------------------------------------------------------------------
-    const int screen_width = 800;
-    const int screen_height = 450;
+    const int SCREEN_WIDTH = 800;
+    const int SCREEN_HEIGHT = 450;
 
-    int fail = 0;
     int player_1_score = 0;
     int player_2_score = 0;
 
-    InitWindow(screen_width, screen_height, "raylib [core] example - keyboard input");
+    InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "raylib [core] example - keyboard input");
 
     // ball
-    Vector2 ball_position = {(float)screen_width / 2, (float)screen_height / 2};
+    Vector2 ball_position = {(float)GetScreenWidth() / 2, (float)GetScreenHeight() / 2};
     Vector2 ball_velocity = {5.0f, 5.0f};
 
     // paddle_1
-    Vector2 paddle_1_position = {80, (float)screen_height / 2};
+    Vector2 paddle_1_position = {80, (float)GetScreenHeight() / 2};
     Vector2 paddle_1_velocity = {0.0f, 5.0f};
 
     // paddle_2
-    Vector2 paddle_2_position = {720, (float)screen_height / 2};
+    Vector2 paddle_2_position = {720, (float)GetScreenHeight() / 2};
     Vector2 paddle_2_velocity = {0.0f, 5.0f};
 
     // ball
@@ -89,26 +88,26 @@ int main(void)
             ball_velocity.x = -ball_velocity.x;
         }
 
-        if (ball_position.x >= (GetScreenWidth() - 20))
+        if (ball_position.x >= (GetScreenWidth() - 20)) // bounce --right
         {
             ball_velocity.x = -ball_velocity.x;
-            fail = 1;
             player_1_score ++;
+            ActionLogic(player_1_score, player_2_score);
         }
 
-        if (ball_position.y >= (GetScreenHeight() - 20))
+        if (ball_position.y >= (GetScreenHeight() - 20)) // bounce --top
         {
             ball_velocity.y = -ball_velocity.y;
         }
 
-        if (ball_position.x <= (0))
+        if (ball_position.x <= (0)) // bounce --left
         {
             ball_velocity.x = -ball_velocity.x;
             player_2_score ++;
-            fail = 1;
+            ActionLogic(player_1_score, player_2_score);
         }
 
-        if (ball_position.y <= (0))
+        if (ball_position.y <= (0)) // bounce --left
         {
             ball_velocity.y = -ball_velocity.y;
         }
@@ -125,13 +124,6 @@ int main(void)
         DrawRectangle(paddle_1.x, paddle_1.y, paddle_1.width, paddle_1.height, WHITE);
         DrawRectangle(paddle_2.x, paddle_2.y, paddle_2.width, paddle_2.height, WHITE);
 
-        if (fail == 1)
-        {
-            ClearBackground(BLACK);
-            DrawText(("%d – %d", player_1_score, player_2_score), 10, 10, 20, WHITE);
-            fail = 0;
-        }
-
         EndDrawing();
         //----------------------------------------------------------------------------------
     }
@@ -140,6 +132,14 @@ int main(void)
     //--------------------------------------------------------------------------------------
     CloseWindow(); // Close window and OpenGL context
     //--------------------------------------------------------------------------------------
+
+    return 0;
+}
+
+int ActionLogic (int p1, int p2)
+{
+    ClearBackground(BLACK);
+    DrawText( FormatText( "Score: %i – %i", p1, p2 ), 10, 10, 20, LIGHTGRAY );
 
     return 0;
 }
