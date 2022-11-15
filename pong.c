@@ -50,7 +50,6 @@ int main(void)
         .height = 200,
         .width = 20
     };
-    
 
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
@@ -63,11 +62,11 @@ int main(void)
         ball_position.x += ball_velocity.x;
         ball_position.y += ball_velocity.y;
 
-        if (IsKeyDown(KEY_S)) paddle_1_position.y += paddle_1_velocity.y;
-        if (IsKeyDown(KEY_DOWN)) paddle_2_position.y += paddle_2_velocity.y;
+        if (IsKeyDown(KEY_S)) paddle_1.y += paddle_1_velocity.y;
+        if (IsKeyDown(KEY_DOWN)) paddle_2.y += paddle_2_velocity.y;
 
-        if (IsKeyDown(KEY_W)) paddle_1_position.y -= paddle_1_velocity.y;
-        if (IsKeyDown(KEY_UP)) paddle_2_position.y -= paddle_2_velocity.y;
+        if (IsKeyDown(KEY_W)) paddle_1.y -= paddle_1_velocity.y;
+        if (IsKeyDown(KEY_UP)) paddle_2.y -= paddle_2_velocity.y;
 
         Rectangle ball = {
             .x = ball_position.x,
@@ -80,8 +79,12 @@ int main(void)
 
         };
         
-        if (CheckCollisionRecs(ball, racket1)) {
+        if (CheckCollisionRecs(ball, paddle_1)) {
+            ball_velocity.x = - ball_velocity.x;
+        }
 
+        if (CheckCollisionRecs(ball, paddle_2)) {
+            ball_velocity.x = - ball_velocity.x;
         }
         
         //----------------------------------------------------------------------------------
