@@ -1,12 +1,7 @@
 #include "raylib.h"
 
-//------------------------------------------------------------------------------------
-// Program main entry point
-//------------------------------------------------------------------------------------
 int main(void)
 {
-    // Initialization
-    //--------------------------------------------------------------------------------------
     const int SCREEN_WIDTH = 800;
     const int SCREEN_HEIGHT = 450;
 
@@ -49,14 +44,13 @@ int main(void)
         .height = 200,
         .width = 20};
 
-    SetTargetFPS(60); // Set our game to run at 60 frames-per-second
+    SetTargetFPS(60); // set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
 
-    // Main game loop
-    while (!WindowShouldClose()) // Detect window close button or ESC key
+    // main game loop
+    while (!WindowShouldClose()) // detect window close button or esc key
     {
-        // Update
-        //----------------------------------------------------------------------------------
+        // update
         ball_position.x += ball_velocity.x;
         ball_position.y += ball_velocity.y;
 
@@ -113,10 +107,6 @@ int main(void)
             ball_velocity.y = -ball_velocity.y;
         }
 
-        //----------------------------------------------------------------------------------
-
-        // Draw
-        //----------------------------------------------------------------------------------
         BeginDrawing();
 
             ClearBackground(BLACK);
@@ -127,13 +117,10 @@ int main(void)
             DrawText(TextFormat("Score %d : %d", player_1_score, player_2_score), 10, 10, 20, WHITE);
 
         EndDrawing();
-        //----------------------------------------------------------------------------------
-    }
 
-    // De-Initialization
-    //--------------------------------------------------------------------------------------
-    CloseWindow(); // Close window and OpenGL context
-    //--------------------------------------------------------------------------------------
+    }
+    CloseWindow();
+
 
     return 0;
 }
