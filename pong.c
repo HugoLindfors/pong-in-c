@@ -7,19 +7,17 @@ int main(void)
 {
     // Initialization
     //--------------------------------------------------------------------------------------
-    // const int SCREEN_WIDTH = 800;
-    // const int SCREEN_HEIGHT = 450;
-    int display = GetCurrentMonitor();
-    SetWindowSize(GetMonitorWidth(display), GetMonitorHeight(display));
+    const int SCREEN_WIDTH = 800;
+    const int SCREEN_HEIGHT = 450;
 
     int player_1_score = 0;
     int player_2_score = 0;
 
-    // InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "raylib [core] example - keyboard input");
+    InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "raylib [core] example - keyboard input");
 
     // ball
     Vector2 ball_position = {(float)GetScreenWidth() / 2, (float)GetScreenHeight() / 2};
-    Vector2 ball_velocity = {5.0f, 5.0f};
+    Vector2 ball_velocity = {2.0f, 2.0f};
 
     // paddle_1
     Vector2 paddle_1_position = {80, (float)GetScreenHeight() / 2};
@@ -92,7 +90,8 @@ int main(void)
         {
             ball_velocity.x = -ball_velocity.x;
             player_1_score ++;
-            ActionLogic(player_1_score, player_2_score);
+            ball_position.x = GetScreenWidth() / 2; ball_position.y = (float)GetScreenHeight() / 2;
+            if ( ball_velocity.x >= 10 ) {ball_velocity.x --;}
         }
 
         if (ball_position.y >= (GetScreenHeight() - 20)) // bounce --top
@@ -104,7 +103,9 @@ int main(void)
         {
             ball_velocity.x = -ball_velocity.x;
             player_2_score ++;
-            ActionLogic(player_1_score, player_2_score);
+            ball_position.x = GetScreenWidth() / 2; ball_position.y = (float)GetScreenHeight() / 2;
+            if ( ball_velocity.x <= 10 ) {ball_velocity.x ++;}
+
         }
 
         if (ball_position.y <= (0)) // bounce --left
@@ -118,11 +119,12 @@ int main(void)
         //----------------------------------------------------------------------------------
         BeginDrawing();
 
-        ClearBackground(BLACK);
+            ClearBackground(BLACK);
 
-        DrawRectangle(ball.x, ball.y, ball.width, ball.height, WHITE);
-        DrawRectangle(paddle_1.x, paddle_1.y, paddle_1.width, paddle_1.height, WHITE);
-        DrawRectangle(paddle_2.x, paddle_2.y, paddle_2.width, paddle_2.height, WHITE);
+            DrawRectangle(ball.x, ball.y, ball.width, ball.height, WHITE);
+            DrawRectangle(paddle_1.x, paddle_1.y, paddle_1.width, paddle_1.height, WHITE);
+            DrawRectangle(paddle_2.x, paddle_2.y, paddle_2.width, paddle_2.height, WHITE);
+            DrawText(TextFormat("Score %d : %d", player_1_score, player_2_score), 10, 10, 20, WHITE);
 
         EndDrawing();
         //----------------------------------------------------------------------------------
@@ -132,14 +134,6 @@ int main(void)
     //--------------------------------------------------------------------------------------
     CloseWindow(); // Close window and OpenGL context
     //--------------------------------------------------------------------------------------
-
-    return 0;
-}
-
-int ActionLogic (int p1, int p2)
-{
-    ClearBackground(BLACK);
-    DrawText( FormatText( "Score: %i – %i", p1, p2 ), 10, 10, 20, LIGHTGRAY );
 
     return 0;
 }
